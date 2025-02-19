@@ -11,8 +11,64 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
-
+    <link rel="stylesheet" href="styles.css" />
+    <script src="/components/Benefit.js" defer></script>
+    <script src="/components/CtaButton.js" defer></script>
     <title>Newsletter sign-up form with success message</title>
   </head>
-  <body></body>
+  <body>
+    <!-- Main Card -->
+    <main class="cover bg:dark">
+      <div class="box with-sidebar card">
+        <article class="stack cta">
+          <header>
+            <h1 class="heading">Stay updated!</h1>
+          </header>
+          <p>Join 60,000+ product managers receiving monthly updates on:</p>
+          <div>
+            <ul class="benefits stack">
+              <benefit-c>
+                Product discovery and building what matters
+              </benefit-c>
+              <benefit-c> Measuring to ensure updates are a success </benefit-c>
+              <benefit-c> And much more! </benefit-c>
+            </ul>
+          </div>
+          <form action="" class="stack form">
+            <div class="input">
+              <label for="input">Email address</label>
+              <input type="email" id="input" />
+            </div>
+            <ctabutton-c>Subscribe to monthly newsletter</ctabutton-c>
+          </form>
+        </article>
+        <picture>
+          <source
+            srcset="/assets/images/illustration-sign-up-mobile.svg"
+            media="(max-width: 697px)"
+          />
+          <img
+            src="/assets/images/illustration-sign-up-desktop.svg"
+            alt="Illustration"
+            class="bg-image"
+          />
+        </picture>
+      </div>
+
+      <!-- Success -->
+
+      <div class="box success">
+        <div class="stack">
+          <img src="/assets/images/icon-list.svg" alt="Checkmark icon" />
+          <h1 class="heading">Thanks for subscribing!</h1>
+          <p>
+            A confirmation email has been sent to
+            <strong>ash@loremcompany.com</strong>. Please open it and click the
+            button inside to confirm your subscription.
+          </p>
+          <ctabutton-c>Dismiss message</ctabutton-c>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
