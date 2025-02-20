@@ -12,10 +12,11 @@
       href="./assets/images/favicon-32x32.png"
     />
     <link rel="stylesheet" href="styles.css" />
-    <script src="/components/Benefit.js" defer></script>
-    <script src="/components/Field.js" defer></script>
-    <script src="/components/CtaButton.js" defer></script>
-    <script src="script.js" defer></script>
+    <script type="module" src="/eventBus.js"></script>
+    <script type="module" src="/components/Benefit.js"></script>
+    <script type="module" src="/components/Field.js"></script>
+    <script type="module" src="/components/CtaButton.js"></script>
+    <script type="module" src="script.js"></script>
     <title>Newsletter sign-up form with success message</title>
   </head>
   <body>
@@ -37,7 +38,7 @@
             </ul>
           </div>
           <form action="" class="stack form">
-            <field-c></field-c>
+            <field-c type="email"></field-c>
             <ctabutton-c type="submit"
               >Subscribe to monthly newsletter</ctabutton-c
             >

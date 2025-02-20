@@ -1,3 +1,5 @@
+import { eventBus } from "../eventBus.js";
+
 const fieldTemplate = document.createElement("template");
 
 fieldTemplate.innerHTML = /* html */ `
@@ -52,6 +54,10 @@ fieldTemplate.innerHTML = /* html */ `
 `;
 
 class Field extends HTMLElement {
+  static get observedAttributes() {
+    return ["type"];
+  }
+
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
@@ -59,30 +65,20 @@ class Field extends HTMLElement {
 
   connectedCallback() {
     this.root.appendChild(fieldTemplate.content.cloneNode(true));
-
     this.input = this.root.querySelector("input");
     this.field = this.root.querySelector(".field");
 
-    this.input.addEventListener("input", () => this.validateEmail());
+    if (this.getAttribute("type") === "email") {
+      this.input.addEventListener("input", () => this.validateEmail());
+    }
   }
 
   validateEmail() {
     const email = this.input.value.trim();
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    this.field.classList.toggle("error", !isValid);
 
-    if (isValid) {
-      this.field.classList.remove("error");
-    } else {
-      this.field.classList.add("error");
-    }
-
-    this.dispatchEvent(
-      new CustomEvent("email-validation", {
-        detail: { isValid },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    eventBus.emit("validate", { isValid });
   }
 }
 

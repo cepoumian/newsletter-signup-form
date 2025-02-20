@@ -1,3 +1,5 @@
+import { eventBus } from "../eventBus.js";
+
 const ctaButtonTemplate = document.createElement("template");
 
 ctaButtonTemplate.innerHTML = /* html */ `
@@ -21,7 +23,6 @@ ctaButtonTemplate.innerHTML = /* html */ `
 
     .cta-button:disabled {
       cursor: not-allowed;
-      <!-- opacity: 0.5; -->
     }
   </style>
   <button class="cta-button" disabled>
@@ -41,30 +42,29 @@ class CtaButton extends HTMLElement {
     this.button = this.root.querySelector(".cta-button");
   }
 
-  attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === "type") {
-      if (newValue === "submit") {
-        document.addEventListener("email-validation", (e) => {
-          this.updateState(e.detail.isValid);
-        });
-      }
-      if (newValue === "dismiss") {
-        this.updateState(true);
-        this.button.addEventListener("click", () => {
-          this.dispatchEvent(new CustomEvent("cta-clicked", { bubbles: true }));
-        });
-      }
+  connectedCallback() {
+    this.button = this.root.querySelector(".cta-button");
+
+    if (this.getAttribute("type") === "submit") {
+      eventBus.on("validate", (e) => {
+        this.updateState(e.detail.isValid);
+        this.button.addEventListener("click", () =>
+          eventBus.emit("submit-field")
+        );
+      });
+    }
+
+    if (this.getAttribute("type") === "dismiss") {
+      this.updateState(true);
+      this.button.addEventListener("click", () =>
+        eventBus.emit("dismiss-modal")
+      );
     }
   }
 
   updateState(isValid) {
-    if (isValid) {
-      this.button.removeAttribute("disabled");
-      this.button.classList.add("active");
-    } else {
-      this.button.setAttribute("disabled", "");
-      this.button.classList.remove("active");
-    }
+    this.button.toggleAttribute("disabled", !isValid);
+    this.button.classList.toggle("active", isValid);
   }
 }
 

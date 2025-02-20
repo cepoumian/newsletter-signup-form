@@ -252,9 +252,7 @@
     --stack-space: var(--spacing-300);
     max-inline-size: 23.5rem;
   }
-}
 
-@layer components {
   .success {
     display: flex;
     justify-content: center;

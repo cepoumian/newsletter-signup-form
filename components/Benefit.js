@@ -2,7 +2,7 @@ const benefitTemplate = document.createElement("template");
 
 benefitTemplate.innerHTML = /* html */ `
   <style>
-    li {
+    .benefit {
       list-style: none;
       display: flex;
       justify-content: flex-start;
@@ -10,7 +10,7 @@ benefitTemplate.innerHTML = /* html */ `
       gap: 1rem;
     }
   </style>
-  <li>
+  <li class="benefit">
     <img src="/assets/images/icon-list.svg" alt="" />
     <slot></slot>
   </li>
