@@ -13,12 +13,14 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="/components/Benefit.js" defer></script>
+    <script src="/components/Field.js" defer></script>
     <script src="/components/CtaButton.js" defer></script>
+    <script src="script.js" defer></script>
     <title>Newsletter sign-up form with success message</title>
   </head>
   <body>
-    <!-- Main Card -->
     <main class="cover bg:dark">
+      <!-- Main Card -->
       <div class="box with-sidebar card">
         <article class="stack cta">
           <header>
@@ -35,11 +37,10 @@
             </ul>
           </div>
           <form action="" class="stack form">
-            <div class="input">
-              <label for="input">Email address</label>
-              <input type="email" id="input" />
-            </div>
-            <ctabutton-c>Subscribe to monthly newsletter</ctabutton-c>
+            <field-c></field-c>
+            <ctabutton-c type="submit"
+              >Subscribe to monthly newsletter</ctabutton-c
+            >
           </form>
         </article>
         <picture>
@@ -57,7 +58,7 @@
 
       <!-- Success -->
 
-      <div class="box success">
+      <div class="box success hidden">
         <div class="stack">
           <img src="/assets/images/icon-list.svg" alt="Checkmark icon" />
           <h1 class="heading">Thanks for subscribing!</h1>
@@ -66,7 +67,7 @@
             <strong>ash@loremcompany.com</strong>. Please open it and click the
             button inside to confirm your subscription.
           </p>
-          <ctabutton-c>Dismiss message</ctabutton-c>
+          <ctabutton-c type="dismiss">Dismiss message</ctabutton-c>
         </div>
       </div>
     </main>
