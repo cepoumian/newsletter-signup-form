@@ -38,11 +38,10 @@ class CtaButton extends HTMLElement {
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
-    this.root.appendChild(ctaButtonTemplate.content.cloneNode(true));
-    this.button = this.root.querySelector(".cta-button");
   }
 
   connectedCallback() {
+    this.root.appendChild(ctaButtonTemplate.content.cloneNode(true));
     this.button = this.root.querySelector(".cta-button");
 
     if (this.getAttribute("type") === "submit") {
