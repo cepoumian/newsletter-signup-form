@@ -246,6 +246,10 @@
     --stack-space: var(--spacing-100);
     margin-block: 0;
     padding-inline-start: 0;
+
+    & > li {
+      list-style: none;
+    }
   }
 
   .form {

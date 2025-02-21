@@ -10,10 +10,10 @@ benefitTemplate.innerHTML = /* html */ `
       gap: 1rem;
     }
   </style>
-  <li class="benefit">
+  <div class="benefit">
     <img src="/assets/images/icon-list.svg" alt="" />
     <slot></slot>
-  </li>
+  </div>
 `;
 
 class Benefit extends HTMLElement {
