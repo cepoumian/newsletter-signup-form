@@ -75,6 +75,27 @@ template.innerHTML = `
 `;
 ```
 
+For such a small project, I didn't see the need to add any abstraction layer for state management. I did, however, create an eventBus singleton to make event dispatching and side effects more convenient.
+
+```js
+class EventBus extends EventTarget {
+  emit(eventName, detail = {}) {
+    this.dispatchEvent(new CustomEvent(eventName, { detail }));
+  }
+
+  on(eventName, callback) {
+    this.addEventListener(eventName, callback);
+  }
+
+  off(eventName, callback) {
+    this.removeEventListener(eventName, callback);
+  }
+}
+
+// Singleton object to manage events
+export const eventBus = new EventBus();
+```
+
 I also wanted to keep focusing on what I've learned from the [Every Layout](https://every-layout.dev/) CSS methodology.
 
 The Every Layout book proposes an approach to layout based on classes or web components that tackle one specific task at a time. It also makes special emphasis on utilizing css logical properties (inline, block, etc.) instead of properties that would only work in horizontal-tb writing modes (e.g., margin-block-start instead of margin-top).
