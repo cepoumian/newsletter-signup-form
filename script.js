@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardBox = document.querySelector(".card");
   const emailField = document.querySelector("field-c");
   const ctaButton = document.querySelector("ctabutton-c");
+  const successEmail = document.querySelector(".success-email");
 
   eventBus.on("dismiss-modal", () => {
     cardBox.classList.remove("hidden");
@@ -13,13 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   eventBus.on("submit-field", () => {
+    const email = emailField.getEmail();
+    successEmail.textContent = email;
     cardBox.classList.add("hidden");
     successBox.classList.remove("hidden");
   });
 
   eventBus.on("reset-field", () => {
-    emailField.shadowRoot.querySelector("input").value = "";
-    ctaButton.shadowRoot.querySelector("button").setAttribute("disabled", "");
-    ctaButton.shadowRoot.querySelector("button").classList.remove("active");
+    emailField.reset();
+    ctaButton.updateState(false);
   });
 });

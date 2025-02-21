@@ -45,25 +45,42 @@ class CtaButton extends HTMLElement {
     this.button = this.root.querySelector(".cta-button");
 
     if (this.getAttribute("type") === "submit") {
-      eventBus.on("validate", (e) => {
-        this.updateState(e.detail.isValid);
-        this.button.addEventListener("click", () =>
-          eventBus.emit("submit-field")
-        );
-      });
+      this.button.addEventListener("click", this.submit);
     }
 
     if (this.getAttribute("type") === "dismiss") {
+      this.button.addEventListener("click", this.dismiss);
       this.updateState(true);
-      this.button.addEventListener("click", () =>
-        eventBus.emit("dismiss-modal")
-      );
+    }
+
+    eventBus.on("validate", (e) => {
+      this.updateState(e.detail.isValid);
+    });
+  }
+
+  disconnectedCallback() {
+    eventBus.off("validate", this.updateState);
+
+    if (this.getAttribute("type") === "submit") {
+      this.button.removeEventListener("click", this.submit);
+    }
+
+    if (this.getAttribute("type") === "dismiss") {
+      this.button.removeEventListener("click", this.dismiss);
     }
   }
 
   updateState(isValid) {
     this.button.toggleAttribute("disabled", !isValid);
     this.button.classList.toggle("active", isValid);
+  }
+
+  submit() {
+    eventBus.emit("submit-field");
+  }
+
+  dismiss() {
+    eventBus.emit("dismiss-modal");
   }
 }
 

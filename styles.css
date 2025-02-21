@@ -250,7 +250,6 @@
 
   .form {
     --stack-space: var(--spacing-300);
-    max-inline-size: 23.5rem;
   }
 
   .success {
@@ -292,11 +291,11 @@
       & > picture {
         max-height: 22.5rem;
       }
+    }
 
-      & .cta {
-        align-self: stretch;
-        max-inline-size: 100%;
-      }
+    .cta {
+      align-self: stretch;
+      max-inline-size: 100%;
     }
   }
 

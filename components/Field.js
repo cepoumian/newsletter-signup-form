@@ -37,19 +37,22 @@ fieldTemplate.innerHTML = /* html */ `
     .error-message {
       color: var(--clr-red);
       font-size: var(--fs-300);
-      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease-in-out;
     }
 
     .field.error .error-message {
-      display: block;
+      opacity: 1;
+      visibility: visible;
     }
   </style>
   <div class="field">
     <div class="container">
-      <label for="input">Email address</label>
-      <span class="error-message">Valid email required</span>
+      <label for="input"></label>
+      <span class="error-message" aria-live="polite"></span>
     </div>
-    <input type="email" id="input" />
+    <input id="input" />
   </div>
 `;
 
@@ -67,9 +70,20 @@ class Field extends HTMLElement {
     this.root.appendChild(fieldTemplate.content.cloneNode(true));
     this.input = this.root.querySelector("input");
     this.field = this.root.querySelector(".field");
+    this.errorMessage = this.root.querySelector(".error-message");
+    this.label = this.root.querySelector("label");
 
     if (this.getAttribute("type") === "email") {
       this.input.addEventListener("input", () => this.validateEmail());
+      this.input.setAttribute("type", "email");
+      this.label.textContent = "Email address";
+      this.errorMessage.textContent = "Valid email required";
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.getAttribute("type") === "email") {
+      this.input.removeEventListener("input", () => this.validateEmail());
     }
   }
 
@@ -79,6 +93,15 @@ class Field extends HTMLElement {
     this.field.classList.toggle("error", !isValid);
 
     eventBus.emit("validate", { isValid });
+  }
+
+  getEmail() {
+    return this.input.value.trim();
+  }
+
+  reset() {
+    this.input.value = "";
+    this.field.classList.remove("error");
   }
 }
 
